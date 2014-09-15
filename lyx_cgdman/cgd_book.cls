@@ -18,13 +18,15 @@
 
 \LoadClass[a4paper,oneside,12pt]{book}
 
+
 \RequirePackage{amsmath,amssymb,amsfonts}
+
 %\RequirePackage{showframe}
 \RequirePackage[a4paper,left=5.5cm, marginparwidth=3.5cm,right=2cm,bottom=1in]{geometry}
 \RequirePackage[framemethod=TikZ]{mdframed}
 \RequirePackage[explicit]{titlesec}
 \RequirePackage{xcolor,array}
-\RequirePackage{paralist,listings,booktabs,ifxetex,changepage}
+\RequirePackage{paralist,booktabs,ifxetex,changepage}
 
 
 %%------------Fonts define------------------------------
@@ -32,7 +34,7 @@
 
 \definecolor{mybluei}{RGB}{88,147,119}
 \definecolor{myblueii}{RGB}{88,147,119}
-\setcounter{secnumdepth}{3}
+
 
 \renewcommand\chaptertitlename{CHAPTER}%
 
@@ -77,7 +79,7 @@
   \linebreak%\vspace*{1pc}%
   #1}[\vskip-1em]
 
-\titleformat{\subsection}%
+\titleformat{\subsection}
   {\normalfont\large\sffamily\SectionFont\color{myblueii}}
   {\hspace*{\dimexpr-\marginparwidth-\marginparsep\relax}%
   \color{myblueii}%
@@ -85,14 +87,6 @@
   {0em}
   {#1}[\vskip-1.1em]
 
-\titleformat{\subsubsection}%
-  {\normalfont\large\sffamily\SectionFont\color{myblueii!80}}
-  {\hspace*{\dimexpr-\marginparwidth-\marginparsep\relax}%
-  \color{myblueii!80}%
-  }
-  {0em}
-  {#1}[\vskip-1.1em]
-  
   
 %%-----------------------------------------------Header define------------------------------
 \RequirePackage{fancyhdr}
@@ -123,17 +117,10 @@
 
 \newcommand{\marginhead}[1]{\marginpar{\vspace*{1.2em}\color{myblueii}\raggedleft\SectionFont #1}} 
 
-
+ 
 \newenvironment{widetext}%
 {\begin{adjustwidth}{\dimexpr-\marginparwidth-\marginparsep}{}\centering}%
 {\end{adjustwidth}}%
-
-\newcommand{\startwidetext}{\begin{widetext}}
-\newcommand{\stopwidetext}{\end{widetext}}
-
-\newcommand{\startGeniusCmdSynopsis}{\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=IDL]}
-\newcommand{\stopGeniusCmdSynopsis}{\end{lstlisting}}
-
 
 \def\eVolt{\text{eV}}
 \def\Percent{\text{\,\%}}
@@ -144,8 +131,4 @@
 \def\Second{\text{s}}
 \def\Inverse{\,}
 \def\Cubic\cMeter{cm$^3$}
-\reversemarginpar
-\parindent=0pt
-\parskip=.8\baselineskip
-
 

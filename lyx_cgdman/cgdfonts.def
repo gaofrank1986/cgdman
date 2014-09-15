@@ -1,0 +1,18 @@
+% cgdfonts.def
+%%-----------------------------Fonts define------------------------------
+\RequirePackage{times}
+
+%% Font definition
+\ifxetex
+\RequirePackage{xeCJK}
+\setmainfont{Times New Roman}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\fi
+
+\newcommand\ChapterFont{\huge\huge\color{myblueii}}
+\newcommand\SectionFont{\usefont{T1}{qhv}{b}{n}\selectfont}
+\newcommand\chaptertitlefont{\usefont{T1}{qhv}{m}{n}\selectfont\scshape}
+
+\endinput
+

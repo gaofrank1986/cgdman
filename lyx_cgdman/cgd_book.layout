@@ -1,0 +1,45 @@
+#% Do not delete the line below; configure depends on this      
+#  \DeclareLaTeXClass[cgd_book]{book (Cogenda EN)}
+
+Format 35
+
+# Read the definitions from report.layout
+Input book.layout
+
+Style CompactItem
+        Category              List
+        Margin                Static
+        LatexType             Item_Environment
+        LatexName             compactitem 
+        NextNoIndent          1
+        LeftMargin            MMN
+        LabelSep              xx
+        ItemSep               0.0
+        TopSep                0.7
+        BottomSep             0.7
+        ParSep                0.0
+        Align                 Block
+        AlignPossible         Block, Left
+        LabelType             Itemize
+        HTMLTag               ul
+        HTMLItem              li
+        HTMLLabel             NONE
+End
+
+Style Marginhead
+        Margin          Static
+        LatexType       Command
+        LatexName       marginhead
+        Category        Structure
+	Align                 Left
+	AlignPossible         Left
+	TopSep                0.0
+	BottomSep             0.0
+	ParSkip               0
+        Font
+          Size                Small
+	  Color         Green
+        EndFont
+End
+
+

@@ -1,0 +1,1348 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass cgd_book
+\begin_preamble
+\reversemarginpar
+\parindent=0pt
+\parskip=.8\baselineskip
+\end_preamble
+\options 12pt
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding default
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Genius 
+\end_layout
+
+\begin_layout Standard
+Semiconductor Device Simulator
+\end_layout
+
+\begin_layout Standard
+Version 1.7.4 
+\end_layout
+
+\begin_layout Standard
+Genius User’s Guide
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+clearpage
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Copyright (c) 2008-2009 Cogenda Pte Ltd, Singapore.
+\end_layout
+
+\begin_layout Standard
+All rights reserved.
+ 
+\end_layout
+
+\begin_layout Marginhead
+License Grant
+\end_layout
+
+\begin_layout Standard
+Duplication of this documentation is permitted only for internal use within
+ the organization of the licensee.
+ 
+\end_layout
+
+\begin_layout Marginhead
+Disclaimer
+\end_layout
+
+\begin_layout Standard
+THIS DOCUMENTATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ TO, THE IMPLIED WARR-A-N-TIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE ARE DISCLA-I-MED.
+ IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INC-L-U-DING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+ AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{heading}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Physics in Genius Device Simulator
+\end_layout
+
+\begin_layout Standard
+Since Gummel's original work, the drift-diffusion model has been widely
+ used in the semiconductor device simulation.
+ It is now the de facto industry standard in this field.
+\end_layout
+
+\begin_layout Standard
+The original DD model can be achieved by following approximation from hydrodynam
+ic model:
+\end_layout
+
+\begin_layout CompactItem
+Light speed is much faster than carrier speed.
+ 
+\end_layout
+
+\begin_layout CompactItem
+All the collision is elastic.
+\end_layout
+
+\begin_layout CompactItem
+Bandgap does not change during collision.
+\end_layout
+
+\begin_layout CompactItem
+Carrier temperature equals to lattice temperature and keeps equilibrium.
+ 
+\end_layout
+
+\begin_layout CompactItem
+The gradient of driving force should keep small.
+ 
+\end_layout
+
+\begin_layout CompactItem
+Carrier degenerate can be neglected.
+\end_layout
+
+\begin_layout Standard
+Some improvements have been applied to DD model for extend its capability.
+ These ``patches'' of course make things complex, but they can deal with
+ real problems.
+\end_layout
+
+\begin_layout Standard
+This chapter describes the DD model and its variations used by GENIUS code
+ for describing semiconductor device behavior as well as physical based
+ parameters such as mobility, recombination rate and son on.
+\end_layout
+
+\begin_layout Standard
+Some improvements have been applied to DD model for extend its capability.
+ These "patches" of course make things complex, but they can deal with real
+ problems.
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\varepsilon\nabla\psi=-q\left(p-n+{N_{D}}^{+}-{N_{A}}^{-}\right)\label{eq:dd}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where, 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is the electrostatic potential of the vacuum level.
+ This choice makes the description of metal-oxide-semiconductor contact
+ and heterojunction easier.
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ are the electron and hole concentration, 
+\begin_inset Formula ${N_{D}}^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula ${N_{A}}^{-}$
+\end_inset
+
+ are the ionized impurity concentrations.
+ 
+\begin_inset Formula $q$
+\end_inset
+
+ is the magnitude of the charge of an electron.
+ 
+\end_layout
+
+\begin_layout Standard
+The relationship of conduct band 
+\begin_inset Formula $E_{c}$
+\end_inset
+
+, valence band 
+\begin_inset Formula $E_{v}$
+\end_inset
+
+ and vacuum level 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is: 
+\begin_inset Formula 
+\begin{align}
+E_{c} & =-q\psi-\chi-\Delta E_{c}\label{eq:a1}\\
+E_{v} & =E_{c}-E_{g}+\Delta E_{v}.\label{eq:a2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Level 1 Drift-Diffusion Equation
+\end_layout
+
+\begin_layout Standard
+Level 1 Drift-Diffusion ( DDML1 ) is the fundamental solver of GENIUS code
+ for lattice temperature keeps constant though out the solve procedure.
+\end_layout
+
+\begin_layout Marginhead
+subjection
+\end_layout
+
+\begin_layout Standard
+The primary function of DDML1 is to solve the following set of partial different
+ial equations, namely Poisson's equation, along with the hole and electron
+ continuity equations:
+\end_layout
+
+\begin_layout Section
+Level 1 Drift-Diffusion Equation
+\end_layout
+
+\begin_layout Standard
+Level 1 Drift-Diffusion (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+) is the fundamental solver of GENIUS code for lattice temperature keeps
+ constant though out the solve procedure.
+ 
+\end_layout
+
+\begin_layout Standard
+The primary function of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+ is to solve the following set of partial differential equations, namely
+ Poisson's equation, along with the hole and electron continuity equations:
+\end_layout
+
+\begin_layout Subsection
+Poisson's Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\varepsilon\nabla\psi=-q\left(p-n+{N_{D}}^{+}-{N_{A}}^{-}\right)\label{Poisson's Equation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where, 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is the electrostatic potential of the vacuum level.
+ This choice makes the description of metal-oxide-semiconductor contact
+ and heterojunction easier.
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ are the electron and hole concentration, 
+\begin_inset Formula ${N_{D}}^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula ${N_{A}}^{-}$
+\end_inset
+
+ are the ionized impurity concentrations.
+ 
+\begin_inset Formula $q$
+\end_inset
+
+ is the magnitude of the charge of an electron.
+ 
+\end_layout
+
+\begin_layout Standard
+The relationship of conduct band 
+\begin_inset Formula $E_{c}$
+\end_inset
+
+, valence band 
+\begin_inset Formula $E_{v}$
+\end_inset
+
+ and vacuum level 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+E_{c} & =-q\psi-\chi-\Delta E_{c}\label{eq:a1-1}\\
+E_{v} & =E_{c}-E_{g}+\Delta E_{v}.\label{eq:a2-1}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, 
+\begin_inset Formula $\chi$
+\end_inset
+
+ is the electron affinity.
+ 
+\begin_inset Formula $E_{g}$
+\end_inset
+
+ is the bandgap of semiconductor.
+ 
+\begin_inset Formula $\Delta E_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta E_{v}$
+\end_inset
+
+ are the bandgap shift caused by heavy doping or mechanical strain.
+ 
+\end_layout
+
+\begin_layout Standard
+Furthermore, the relationship of vacuum level 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and intrinsic Fermi potential 
+\begin_inset Formula $\psi_{{\rm intrinsic}}$
+\end_inset
+
+ is:
+\begin_inset Formula 
+\begin{equation}
+\psi=\psi_{{\rm intrinsic}}-\frac{\chi}{q}-\frac{E_{g}}{2q}-\frac{k_{b}T}{2q}\ln\left(\frac{N_{c}}{N_{v}}\right)\label{eq:intrinsic}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reference 
+\begin_inset Formula $0\eVolt$
+\end_inset
+
+ of energy is set to intrinsic Fermi level of equilibrium state in GENIUS.
+\end_layout
+
+\begin_layout Subsection
+Continuity Equations
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "Continuity equation+DDML1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The continuity equations for electrons and holes are defined as follows:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\frac{\partial n}{\partial t} & =\frac{1}{q}\nabla\cdot\vec{J}_{n}-(U-G)\label{eq:c1}\\
+\frac{\partial p}{\partial t} & =-\frac{1}{q}\nabla\cdot\vec{J}_{p}-(U-G)\label{eq:c2}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\vec{J}_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{J}_{p}$
+\end_inset
+
+ are the electron and hole current densities, 
+\begin_inset Formula $U$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ are the recombination and generation rates for both electrons and holes.
+ 
+\end_layout
+
+\begin_layout Subsection
+Drift-Diffusion Current Equations
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "Drift-diffusion current+DDML1"
+
+\end_inset
+
+The current densities 
+\begin_inset Formula $\vec{J}_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{J}_{p}$
+\end_inset
+
+ are expressed in terms of the level 1 drift-diffusion model here.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\vec{J}_{n} & =q\mu_{n}n\vec{E}_{n}+qD_{n}\nabla n\label{eq:jn1}\\
+\vec{J}_{p} & =q\mu_{p}p\vec{E}_{p}-qD_{p}\nabla p\label{eq:jn2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mu_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu_{p}$
+\end_inset
+
+ are the electron and hole mobilities.
+ 
+\begin_inset Formula $D_{n}=\frac{k_{b}T}{q}\mu_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $D_{p}=\frac{k_{b}T}{q}\mu_{p}$
+\end_inset
+
+ are the electron and hole diffusivities, according to Einstein relationship.
+ 
+\end_layout
+
+\begin_layout Subsection
+Effective Electrical Field
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{E}_{n}$
+\end_inset
+
+and 
+\begin_inset Formula $\vec{E}_{p}$
+\end_inset
+
+are the effective driving electrical field to electrons and holes, which
+ related to local band diagram.
+ The band structure of heterojunction has been taken into account here 
+\backslash
+cite{Lindefelt1994}.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:Equation:DDML1:DrivingField"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\vec{E}_{n} & =\frac{1}{q}\nabla E_{c}-\frac{k_{b}T}{q}\nabla\left(\ln(N_{c})-\ln(T^{3/2})\right)\label{eq:en1}\\
+\vec{E}_{p} & =\frac{1}{q}\nabla E_{v}+\frac{k_{b}T}{q}\nabla\left(\ln(N_{v})-\ln(T^{3/2})\right)\label{eq:en2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The lattice temperature keeps uniform throughout 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+, the above temperature gradient item takes no effect in fact.
+ 
+\end_layout
+
+\begin_layout Standard
+By substituting drift-diffusion model into the current density expressions,
+ and combining with Poisson's equation, the following basic equations for
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+ are obtained:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\frac{\partial n}{\partial t} & =\nabla\cdot\left(\mu_{n}n\vec{E}_{n}+\mu_{n}\frac{k_{b}T}{q}\nabla n\right)-(U-G)\label{eq:nt1}\\
+\frac{\partial p}{\partial t} & =-\nabla\cdot\left(\mu_{p}p\vec{E}_{p}-\mu_{p}\frac{k_{b}T}{q}\nabla p\right)-(U-G)\label{eq:nt2}\\
+\nabla\cdot\varepsilon\nabla\psi & =-q(p-n+{N_{D}}^{+}-{N_{A}}^{-})\label{eq:dt2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+ is suitable for PN diode, BJT transistor and long gate MOSFET simulation.
+ It is robust, and runs pretty fast for real work.
+ The detailed discretization scheme can be found at [[TODO]].
+\end_layout
+
+\begin_layout Section
+Level 2 Drift-Diffusion Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "DDML2+Equation"
+
+\end_inset
+
+The Level 2 DD model considers the influence of lattice temperature by solving
+ the extra thermal equation simultaneously with the electrical equations.
+ Also, the formula of drift-diffusion equation should be modified according
+ to 
+\backslash
+cite{Selberherr1984}.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "Drift-diffusion current+DDML2"
+
+\end_inset
+
+The electron diffusion current in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{DDML1}
+\end_layout
+
+\end_inset
+
+ can be written as: 
+\begin_inset Formula 
+\begin{equation}
+{\vec{J}}_{n,{\rm diff}}=\frac{k_{b}T}{q}\mu_{n}q\nabla n=k_{b}T\mu_{n}\nabla n
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Temperature Gradient Correction
+\end_layout
+
+\begin_layout Standard
+But for DDML2, it has the form of
+\begin_inset Formula 
+\begin{equation}
+{\vec{J}}_{n,{\rm diff}}=\mu_{n}k_{b}(T\nabla n+n\nabla T)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The hole diffusion current should be modified in the same manner.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+{\vec{J}}_{p,{\rm diff}}=-\mu_{p}k_{b}(T\nabla p+p\nabla T)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bandgap Narrowing due to Heavy Doping
+\end_layout
+
+\begin_layout Standard
+When bandgap narrowing effects
+\backslash
+label{Bandgap narrowing+Slotboom model} due to heavy doping takes place
+ 
+\backslash
+cite{Slotboom1977}, the band edge shifts:
+\begin_inset Formula 
+\begin{equation}
+\Delta E_{g}=\frac{E_{{\rm bgn}}}{2k_{b}T}\left[\ln\frac{N_{{\rm total}}}{N_{{\rm ref}}}+\sqrt{\left(\ln\frac{N_{{\rm total}}}{N_{{\rm ref}}}\right)^{2}+C_{{\rm bgn}}}\right].
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The intrinsic concentration should be modified:
+\begin_inset Formula 
+\begin{equation}
+n_{ie}=\sqrt{N_{c}N_{v}}\exp\left(-\frac{E_{g}}{2k_{b}T}\right)\cdot\exp(\Delta E_{g})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since the carrier current Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Equation:DDML1:DrivingField"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+XXXXXXXXXXXXXXXXXXXXXXXXXX
+\end_layout
+
+\begin_layout Standard
+involves the energy level of conduction band  
+\begin_inset Formula $N_{c}$
+\end_inset
+
+and valence band 
+\begin_inset Formula $N_{v}$
+\end_inset
+
+, the bandgap shift should be attributed to them.
+ The bandgap narrowing is attributed half to the conduction band and another
+ half to the valence band as default:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+E_{c}' & =E_{c}-\frac{1}{2}\Delta E_{g}\\
+E_{v}' & =E_{v}+\frac{1}{2}\Delta E_{g}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parameters used in the default band structure model is listed in Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Equation:Band:Default:Param"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="5">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Symbol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Unit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Silicon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GaAs
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{E_{g}(300)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{EG300}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{\eVolt}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1241 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.424 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{\alpha}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+cal{EGALPH}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{\eVolt\Per\Kelvin}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{2.73\times10^{-4}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{5.405\times10^{-4}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{\beta}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cal{EGBETA}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{\Kelvin}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ensuremath{204}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Equation:Band:Default:Param"
+
+\end_inset
+
+Parameters of the Default band structure model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+The Second Chapter Style
+\end_layout
+
+\end_body
+\end_document
