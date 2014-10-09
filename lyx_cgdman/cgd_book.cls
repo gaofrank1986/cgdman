@@ -27,16 +27,92 @@
 \RequirePackage[explicit]{titlesec}
 \RequirePackage{xcolor,array}
 \RequirePackage{paralist,booktabs,ifxetex,changepage}
-
+\RequirePackage{graphicx,url}
 
 %%------------Fonts define------------------------------
 \input{cgdfonts.def}
 
 \definecolor{mybluei}{RGB}{88,147,119}
 \definecolor{myblueii}{RGB}{88,147,119}
-
+\definecolor{mygray}{RGB}{230,230,230}
 
 \renewcommand\chaptertitlename{CHAPTER}%
+
+% Maketitle command, modified 
+
+\def \productTitle#1{\gdef\@productTitle{#1}}
+\def \productSubtitle#1{\gdef\@productSubtitle{#1}}
+\def \productVersion#1{\gdef\@productVersion{#1}}
+\def \company#1{\gdef\@company{#1}}
+
+\newcommand{\FilenameType}{\emph}
+\newcommand{\IdentifierType}[1]{\text{#1}}
+\setcounter{secnumdepth}{3}
+
+\renewcommand{\maketitle}{% called outside
+\begin{titlepage}
+\raggedleft
+\null
+\vskip 4em
+\SectionFont{\fontsize{40}{80}\selectfont  {\@productTitle}}
+
+\bigskip
+{\fontsize{25}{80}\selectfont  {\@productSubtitle} }
+
+\bigskip
+{\Large  {\@productVersion} }
+
+\bigskip
+{\fontsize{25}{80}\selectfont   {\@title} }
+
+\vfill
+\centerline{ {\@company}}
+\end{titlepage}}
+
+\RequirePackage{listings}
+\lstset{
+  frame=tb,
+  commentstyle=\color{red!50!green!50!blue!50},
+  keywordstyle=\color{mybluei}\bfseries,
+  backgroundcolor=\color{mygray},
+  stringstyle=\ttfamily,
+  basicstyle=\footnotesize,
+  breaklines=true, 
+  breakautoindent=true
+}
+\lstdefinestyle{GeniusCmd}{
+  frame=tb,
+  commentstyle=\color{red!50!green!50!blue!50},
+  keywordstyle=\color{mybluei}\bfseries,
+  backgroundcolor=\color{mygray},
+  stringstyle=\ttfamily,
+  basicstyle=\footnotesize,
+  breaklines=true, 
+  breakautoindent=true
+}
+
+\lstdefinestyle{GeniusCode}{
+  frame=tb,
+  commentstyle=\color{blue!70},
+  keywordstyle=\color{red}\bfseries,
+  backgroundcolor=\color{mygray},
+  stringstyle=\ttfamily,
+  morekeywords={GLOBAL,ELIMINATE,MESH,HOOK}, 
+  basicstyle=\footnotesize,
+  breaklines=true, 
+  breakautoindent=true
+}
+
+\newenvironment{TableMargin}[1][H]{%
+  \begin{table}[#1]
+  \begin{adjustwidth}{\dimexpr-\marginparwidth-\marginparsep}{}
+  }
+  {\end{adjustwidth}
+   \end{table}}
+
+\newcommand{\ParameterListSubHead}[1]{
+\multicolumn{5}{l}{\textbf{#1}}
+}
 
 %%------------Chapter, Section, Subsection Style define------------------------------
 \titleformat{\chapter}[display]%
@@ -79,7 +155,7 @@
   \linebreak%\vspace*{1pc}%
   #1}[\vskip-1em]
 
-\titleformat{\subsection}
+\titleformat{\subsection}%
   {\normalfont\large\sffamily\SectionFont\color{myblueii}}
   {\hspace*{\dimexpr-\marginparwidth-\marginparsep\relax}%
   \color{myblueii}%
@@ -87,7 +163,14 @@
   {0em}
   {#1}[\vskip-1.1em]
 
-  
+ \titleformat{\subsubsection}%
+  {\normalfont\large\sffamily\SectionFont\color{myblueii!80}}
+  {\hspace*{\dimexpr-\marginparwidth-\marginparsep\relax}%
+  \color{myblueii!80}%
+  }
+  {0em}
+  {#1}[\vskip-1.1em]
+
 %%-----------------------------------------------Header define------------------------------
 \RequirePackage{fancyhdr}
 \fancypagestyle{plain}{%
@@ -122,13 +205,30 @@
 {\begin{adjustwidth}{\dimexpr-\marginparwidth-\marginparsep}{}\centering}%
 {\end{adjustwidth}}%
 
+
 \def\eVolt{\text{eV}}
+\def\Volt{\text{V}}
 \def\Percent{\text{\,\%}}
 \def\uMeter{~\mu \rm m}
 \def\Kelvin{\text{K}}
 \def\Per{\text{/}}
+\def\Ampere{\text{A}}
 \def\cMeter{\text{cm}}
 \def\Second{\text{s}}
+\def\Hertz{\text{Hz}}
+\def\Watt{\text{W}}
+\def\Ohm{\Omega}
+\def\Farad{\text{F}}
+\def\Henry{\text{H}}
+\def\Coulomb{\text{C}}
+\def\Joule{\text{J}}
 \def\Inverse{\,}
 \def\Cubic\cMeter{cm$^3$}
+\newcommand{\Square}[1]{{#1}^2}
+\newcommand{\ISquare}[1]{{#1}^{-2}}
+\def\ttsl{\text} 
+\def\low{\text}
+\reversemarginpar
+\parindent=0pt
+\parskip=.8\baselineskip
 

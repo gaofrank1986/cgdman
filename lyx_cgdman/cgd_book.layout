@@ -1,10 +1,94 @@
 #% Do not delete the line below; configure depends on this      
 #  \DeclareLaTeXClass[cgd_book]{book (Cogenda EN)}
 
-Format 35
+Format 49
 
-# Read the definitions from report.layout
 Input book.layout
+
+ClassOptions
+	PageStyle     empty|plain|heading
+	Other		12pt
+End
+
+NoStyle Author
+NoStyle Address
+NoStyle Right_Address
+
+Style ProductTitle
+	Margin                Static
+	LatexType             Command
+	Category              FrontMatter
+	InTitle               1
+	LatexName             productTitle
+	ParSkip               0.4
+	ItemSep               0
+	TopSep                0
+	BottomSep             1
+	ParSep                1
+	Align                 Right
+	LabelType             No_Label
+	Font
+	  Size                Large
+	EndFont
+	HTMLTag               h2
+	HTMLTitle             true
+End
+
+Style ProductSubtitle
+	Margin                Static
+	LatexType             Command
+	Category              FrontMatter
+	InTitle               1
+	LatexName             productSubtitle
+	ParSkip               0.4
+	ItemSep               0
+	TopSep                0
+	BottomSep             1
+	ParSep                1
+	Align                 Right
+	LabelType             No_Label
+	Font
+	  Size                Large
+	EndFont
+	HTMLTag               h2
+	HTMLTitle             true
+End
+
+Style ProductVersion
+	Margin                Static
+	LatexType             Command
+	Category              FrontMatter
+	InTitle               1
+	LatexName             productVersion
+	LabelSep              xxx
+	ParSkip               0.4
+	TopSep                1.3
+	BottomSep             0.7
+	ParSep                0.7
+	Align                 Right
+	LabelType             No_Label
+	Font
+	  Size                Large
+	EndFont
+End
+
+Style Company
+	Margin                Static
+	LatexType             Command
+	Category              FrontMatter
+	InTitle               1
+	LatexName             company
+	LabelSep              xxx
+	ParSkip               0.4
+	TopSep                1.3
+	BottomSep             0.7
+	ParSep                0.7
+	Align                 Center
+	LabelType             No_Label
+	Font
+	  Size                Large
+	EndFont
+End
 
 Style CompactItem
         Category              List
@@ -26,20 +110,61 @@ Style CompactItem
         HTMLLabel             NONE
 End
 
-Style Marginhead
-        Margin          Static
-        LatexType       Command
-        LatexName       marginhead
-        Category        Structure
-	Align                 Left
-	AlignPossible         Left
-	TopSep                0.0
-	BottomSep             0.0
-	ParSkip               0
-        Font
+Style Subequations
+        Margin                Static
+        LatexType             Environment
+        LatexName             subequations
+        Category              Structure
+        NextNoIndent          1
+        LeftMargin            MMM
+        RightMargin           MMM
+        ParIndent             MM
+        ParSkip		0
+        ItemSep               0
+        TopSep                0.0
+        BottomSep             0.0
+        ParSep                0.0
+        Align                 Center
+        LabelString           "Subequations"
+        LabelFont
           Size                Small
-	  Color         Green
+	  Color		latex
         EndFont
 End
 
 
+InsetLayout "Flex:Marginhead"
+	LabelString           "Marginhead"
+	LatexType             Command
+	LaTexName             marginhead
+	LyXType               Custom
+	Decoration            Classic
+	Font
+	  Color               latex
+	  Family              typewriter
+	EndFont
+	LabelFont
+	  Color               latex
+	  Size                Small
+	EndFont
+	MultiPar              false
+	PassThru              1
+	ParbreakIsNewline     1
+	Spellcheck	      0
+	FreeSpacing           true
+	ForceLTR              true
+End
+
+Float
+	Type                  TableMargin
+	GuiName               TableMargin
+	Placement             h
+	Extension             lot
+	NumberWithin          none
+	Style                 plain
+	ListName              "List of Tables"
+	IsPredefined          true
+	UsesFloatPkg          false
+	ListCommand           listoftables
+	RefPrefix             tab
+End
